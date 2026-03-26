@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="FlowDesk.Api/FlowDesk.Api.csproj" />
+  <Project Path="FlowDesk.Data/FlowDesk.Data.csproj" />
+  <Project Path="FlowDesk.Domain/FlowDesk.Domain.csproj" />
+  <Project Path="FlowDesk.Services/FlowDesk.Services.csproj" />
+  <Project Path="FlowDesk.Tests/FlowDesk.Tests.csproj" />
+</Solution>
