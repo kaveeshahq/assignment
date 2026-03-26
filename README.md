@@ -13,6 +13,7 @@ A lightweight Task Board backend service for FlowDesk, built with ASP.NET Core.
 ## Architecture
 
 The project follows a layered architecture:
+
 - **Presentation Layer** (API) - Controllers and request handling
 - **Business Logic Layer** (Services) - Business rules and validation
 - **Data Access Layer** (Data) - EF Core and repositories
@@ -56,25 +57,30 @@ See the Postman collection for API endpoints and examples.
 ## Design Decisions
 
 ### Architecture
+
 - Layered architecture for separation of concerns
 - Dependency injection for loose coupling
 - Repository pattern for data access
 - Service layer for business logic
 
 ### Database
+
 - SQL Server for persistence
 - Entity Framework Core for ORM
 - Code-first migrations for version control
 
 ### Validation
+
 - FluentValidation for input validation
 - Business rule validation in services
 
 ### Logging
+
 - Serilog for structured logging
 - Log levels: Debug, Information, Warning, Error, Fatal
 
 ### Error Handling
+
 - Global exception middleware
 - Consistent error response format
 - Meaningful error messages for clients
