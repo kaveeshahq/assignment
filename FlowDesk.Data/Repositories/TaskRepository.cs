@@ -1,6 +1,7 @@
 using FlowDesk.Domain;
 using Microsoft.EntityFrameworkCore;
 using Task = FlowDesk.Domain.Task;
+using TaskStatus = FlowDesk.Domain.TaskStatus;
 
 namespace FlowDesk.Data.Repositories;
 
@@ -10,7 +11,7 @@ public class TaskRepository : Repository<Task>, ITaskRepository
     {
     }
 
-    public async Task<IEnumerable<Task>> GetByProjectIdAsync(int projectId)
+    public async System.Threading.Tasks.Task<IEnumerable<Task>> GetByProjectIdAsync(int projectId)
     {
         return await DbSet
             .Where(t => t.ProjectId == projectId && !t.IsArchived)
@@ -19,14 +20,14 @@ public class TaskRepository : Repository<Task>, ITaskRepository
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<Task>> GetByStatusAsync(TaskStatus status)
+    public async System.Threading.Tasks.Task<IEnumerable<Task>> GetByStatusAsync(TaskStatus status)
     {
         return await DbSet
             .Where(t => t.Status == status && !t.IsArchived)
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<Task>> GetByAssigneeAsync(int userId)
+    public async System.Threading.Tasks.Task<IEnumerable<Task>> GetByAssigneeAsync(int userId)
     {
         return await DbSet
             .Where(t => t.AssignedToUserId == userId && !t.IsArchived)
@@ -35,7 +36,7 @@ public class TaskRepository : Repository<Task>, ITaskRepository
             .ToListAsync();
     }
 
-    public async Task<IEnumerable<Task>> GetArchivedByProjectAsync(int projectId)
+    public async System.Threading.Tasks.Task<IEnumerable<Task>> GetArchivedByProjectAsync(int projectId)
     {
         return await DbSet
             .Where(t => t.ProjectId == projectId && t.IsArchived)
@@ -43,7 +44,7 @@ public class TaskRepository : Repository<Task>, ITaskRepository
             .ToListAsync();
     }
 
-    public async Task<Task?> GetByIdWithDetailsAsync(int id)
+    public async System.Threading.Tasks.Task<Task?> GetByIdWithDetailsAsync(int id)
     {
         return await DbSet
             .Include(t => t.Project)

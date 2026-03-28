@@ -4,6 +4,7 @@ using FlowDesk.Domain.Exceptions;
 using FlowDesk.Services.DTOs;
 using Microsoft.Extensions.Logging;
 using Task = FlowDesk.Domain.Task;
+using TaskStatus = FlowDesk.Domain.TaskStatus;
 
 namespace FlowDesk.Services.Services;
 
@@ -18,7 +19,7 @@ public class TaskService : ITaskService
         _logger = logger;
     }
 
-    public async Task<TaskResponse> CreateTaskAsync(CreateTaskRequest request, int currentUserId)
+    public async System.Threading.Tasks.Task<TaskResponse> CreateTaskAsync(CreateTaskRequest request, int currentUserId)
     {
         _logger.LogInformation("Creating task '{Title}' in project {ProjectId}", request.Title, request.ProjectId);
 
@@ -33,6 +34,7 @@ public class TaskService : ITaskService
             Priority = request.Priority,
             DueDate = request.DueDate,
             ProjectId = request.ProjectId,
+            Project = project,
             AssignedToUserId = request.AssignedToUserId,
             Status = TaskStatus.Todo
         };
@@ -51,7 +53,7 @@ public class TaskService : ITaskService
         return MapToResponse(task);
     }
 
-    public async Task<TaskResponse?> GetTaskByIdAsync(int id)
+    public async System.Threading.Tasks.Task<TaskResponse?> GetTaskByIdAsync(int id)
     {
         var task = await _unitOfWork.Tasks.GetByIdWithDetailsAsync(id);
         if (task == null)
@@ -60,7 +62,7 @@ public class TaskService : ITaskService
         return MapToResponse(task);
     }
 
-    public async Task<IEnumerable<TaskResponse>> GetProjectTasksAsync(int projectId)
+    public async System.Threading.Tasks.Task<IEnumerable<TaskResponse>> GetProjectTasksAsync(int projectId)
     {
         var project = await _unitOfWork.Projects.GetByIdAsync(projectId);
         if (project == null)
@@ -70,7 +72,7 @@ public class TaskService : ITaskService
         return tasks.Select(MapToResponse);
     }
 
-    public async Task<IEnumerable<TaskResponse>> GetUserTasksAsync(int userId)
+    public async System.Threading.Tasks.Task<IEnumerable<TaskResponse>> GetUserTasksAsync(int userId)
     {
         var user = await _unitOfWork.Users.GetByIdAsync(userId);
         if (user == null)
@@ -80,7 +82,7 @@ public class TaskService : ITaskService
         return tasks.Select(MapToResponse);
     }
 
-    public async Task<IEnumerable<TaskResponse>> GetTasksByStatusAsync(string status)
+    public async System.Threading.Tasks.Task<IEnumerable<TaskResponse>> GetTasksByStatusAsync(string status)
     {
         if (!Enum.TryParse<TaskStatus>(status, true, out var taskStatus))
             throw new InvalidTaskException($"Invalid status: {status}");
@@ -89,7 +91,7 @@ public class TaskService : ITaskService
         return tasks.Select(MapToResponse);
     }
 
-    public async Task<TaskResponse> UpdateTaskAsync(int id, UpdateTaskRequest request, int currentUserId)
+    public async System.Threading.Tasks.Task<TaskResponse> UpdateTaskAsync(int id, UpdateTaskRequest request, int currentUserId)
     {
         _logger.LogInformation("Updating task {TaskId}", id);
 
@@ -133,7 +135,7 @@ public class TaskService : ITaskService
         return MapToResponse(task);
     }
 
-    public async Task<TaskResponse> UpdateTaskStatusAsync(int id, string newStatus, int currentUserId)
+    public async System.Threading.Tasks.Task<TaskResponse> UpdateTaskStatusAsync(int id, string newStatus, int currentUserId)
     {
         _logger.LogInformation("Updating task {TaskId} status to {Status}", id, newStatus);
 
@@ -157,7 +159,7 @@ public class TaskService : ITaskService
         return MapToResponse(task);
     }
 
-    public async Task<TaskResponse> AssignTaskAsync(int id, int userId, int currentUserId)
+    public async System.Threading.Tasks.Task<TaskResponse> AssignTaskAsync(int id, int userId, int currentUserId)
     {
         _logger.LogInformation("Assigning task {TaskId} to user {UserId}", id, userId);
 
@@ -182,7 +184,7 @@ public class TaskService : ITaskService
         return MapToResponse(task);
     }
 
-    public async Task<TaskResponse> UnassignTaskAsync(int id, int currentUserId)
+    public async System.Threading.Tasks.Task<TaskResponse> UnassignTaskAsync(int id, int currentUserId)
     {
         _logger.LogInformation("Unassigning task {TaskId}", id);
 
@@ -200,7 +202,7 @@ public class TaskService : ITaskService
         return MapToResponse(task);
     }
 
-    public async Task<TaskResponse> ArchiveTaskAsync(int id, int currentUserId)
+    public async System.Threading.Tasks.Task<TaskResponse> ArchiveTaskAsync(int id, int currentUserId)
     {
         _logger.LogInformation("Archiving task {TaskId}", id);
 
@@ -220,7 +222,7 @@ public class TaskService : ITaskService
         return MapToResponse(task);
     }
 
-    public async Task<IEnumerable<TaskResponse>> GetArchivedTasksAsync(int projectId)
+    public async System.Threading.Tasks.Task<IEnumerable<TaskResponse>> GetArchivedTasksAsync(int projectId)
     {
         var project = await _unitOfWork.Projects.GetByIdAsync(projectId);
         if (project == null)
@@ -230,7 +232,7 @@ public class TaskService : ITaskService
         return tasks.Select(MapToResponse);
     }
 
-    public async Task DeleteTaskAsync(int id, int currentUserId)
+    public async System.Threading.Tasks.Task DeleteTaskAsync(int id, int currentUserId)
     {
         _logger.LogInformation("Deleting task {TaskId}", id);
 

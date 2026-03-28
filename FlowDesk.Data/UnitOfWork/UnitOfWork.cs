@@ -20,18 +20,18 @@ public class UnitOfWork : IUnitOfWork
     public IProjectRepository Projects => _projectRepository ??= new ProjectRepository(_context);
     public IUserRepository Users => _userRepository ??= new UserRepository(_context);
 
-    public async Task<int> SaveChangesAsync()
+    public async System.Threading.Tasks.Task<int> SaveChangesAsync()
     {
         return await _context.SaveChangesAsync();
     }
 
-    public async Task<bool> BeginTransactionAsync()
+    public async System.Threading.Tasks.Task<bool> BeginTransactionAsync()
     {
         _transaction = await _context.Database.BeginTransactionAsync();
         return true;
     }
 
-    public async Task<bool> CommitTransactionAsync()
+    public async System.Threading.Tasks.Task<bool> CommitTransactionAsync()
     {
         if (_transaction == null)
             return false;
@@ -49,7 +49,7 @@ public class UnitOfWork : IUnitOfWork
         }
     }
 
-    public async Task<bool> RollbackTransactionAsync()
+    public async System.Threading.Tasks.Task<bool> RollbackTransactionAsync()
     {
         if (_transaction == null)
             return false;

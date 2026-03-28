@@ -88,6 +88,7 @@ dotnet run
 ## Core Features
 
 ### Task Management ✅
+
 - CRUD operations with full validation
 - Status workflow: Todo → InProgress → Done → Archived
 - Priority levels 1-5 with sorting
@@ -97,12 +98,14 @@ dotnet run
 - Filter by project, user, status
 
 ### Project Management ✅
+
 - CRUD operations
 - View all project tasks
 - Track active task count
 - Created by tracking
 
 ### User Management ✅
+
 - Registration with strong password validation
 - Roles: TeamMember, TeamLead, Admin
 - Activate/deactivate users
@@ -110,6 +113,7 @@ dotnet run
 - Password hashing with HMACSHA512
 
 ### Data Integrity ✅
+
 - Foreign key validation
 - Cascading deletes for projects → tasks
 - Unique email constraint
@@ -117,18 +121,21 @@ dotnet run
 - Status transition rules enforcement
 
 ### Error Handling ✅
+
 - Global exception middleware
 - Structured error responses with codes
 - Field-level validation errors
 - Proper HTTP status codes (400, 403, 404, 409, 500)
 
 ### Logging & Monitoring ✅
+
 - Serilog structured logging
 - File rolling by day in `logs/` folder
 - Console and file output
 - Request logging with timestamps
 
 ### API Discovery ✅
+
 - OpenAPI 3.0 / Swagger UI
 - Health check endpoint
 - API info with endpoint discovery
@@ -136,10 +143,12 @@ dotnet run
 ## API Endpoints (26 Total)
 
 ### Health & Discovery (2)
+
 - `GET /api` - API info and endpoint list
 - `GET /api/health` - Health check
 
 ### Users (8)
+
 - `POST /api/users` - Register user
 - `GET /api/users` - List all users
 - `GET /api/users/{id}` - Get user
@@ -150,6 +159,7 @@ dotnet run
 - `PATCH /api/users/{id}/deactivate` - Deactivate
 
 ### Projects (6)
+
 - `POST /api/projects` - Create project
 - `GET /api/projects` - List all
 - `GET /api/projects/{id}` - Get project with task count
@@ -158,6 +168,7 @@ dotnet run
 - `DELETE /api/projects/{id}` - Delete
 
 ### Tasks (12)
+
 - `POST /api/tasks` - Create task
 - `GET /api/tasks/{id}` - Get task
 - `GET /api/tasks/project/{projectId}` - Project tasks
@@ -174,6 +185,7 @@ dotnet run
 ## Example Usage
 
 ### Create User
+
 ```bash
 curl -X POST https://localhost:5001/api/users \
   -H "Content-Type: application/json" \
@@ -185,6 +197,7 @@ curl -X POST https://localhost:5001/api/users \
 ```
 
 ### Create Project
+
 ```bash
 curl -X POST https://localhost:5001/api/projects \
   -H "Content-Type: application/json" \
@@ -195,6 +208,7 @@ curl -X POST https://localhost:5001/api/projects \
 ```
 
 ### Create Task
+
 ```bash
 curl -X POST https://localhost:5001/api/tasks \
   -H "Content-Type: application/json" \
@@ -208,6 +222,7 @@ curl -X POST https://localhost:5001/api/tasks \
 ```
 
 ### Update Task Status
+
 ```bash
 curl -X PATCH "https://localhost:5001/api/tasks/1/status?status=InProgress"
 ```
@@ -215,11 +230,13 @@ curl -X PATCH "https://localhost:5001/api/tasks/1/status?status=InProgress"
 ## Validation Rules
 
 ### User Registration
+
 - Email: Required, valid format, max 255 chars, unique
 - Full Name: Required, 1-255 chars
 - Password: Min 8 chars, requires uppercase, lowercase, digit
 
 ### Task Creation
+
 - Title: Required, 1-255 chars
 - Description: Max 2000 chars
 - Priority: 1-5 required
@@ -228,12 +245,14 @@ curl -X PATCH "https://localhost:5001/api/tasks/1/status?status=InProgress"
 - AssignedToUserId: Must exist and be active if provided
 
 ### Project Creation
+
 - Name: Required, 1-255 chars
 - Description: Max 2000 chars
 
 ## Status Transitions
 
 Valid task status flows:
+
 - **Todo** → InProgress, Archived
 - **InProgress** → Done, Todo, Archived
 - **Done** → Archived
@@ -242,6 +261,7 @@ Valid task status flows:
 ## Data Models
 
 ### User
+
 ```json
 {
   "id": 1,
@@ -255,6 +275,7 @@ Valid task status flows:
 ```
 
 ### Project
+
 ```json
 {
   "id": 1,
@@ -269,6 +290,7 @@ Valid task status flows:
 ```
 
 ### Task
+
 ```json
 {
   "id": 1,
@@ -289,31 +311,37 @@ Valid task status flows:
 ## Design Decisions
 
 ### Repository Pattern
+
 - Generic `IRepository<T>` base interface with 10 CRUD/query methods
 - Specific repositories with domain-specific queries
 - Enables testability through mocking
 
 ### Unit of Work
+
 - Coordinates multiple repositories
 - Transaction support for atomic operations
 - Scoped lifetime per HTTP request
 
 ### Validation Strategy
+
 - Input validation via FluentValidation (automatic filter)
 - Business rule validation in services
 - Early validation before database operations
 
 ### Status Machine
+
 - Enforced valid transitions to prevent invalid states
 - Prevents transitions from archived tasks
 - Supports transitions to archived from any state
 
 ### Password Security
+
 - HMACSHA512 with random salt
 - 8+ characters, uppercase, lowercase, digit requirements
 - Passwords never logged
 
 ### Soft Deletes
+
 - IsArchived flag instead of hard delete
 - History preservation for audit
 - Excluded from default queries
@@ -357,6 +385,7 @@ View full history: `git log --oneline`
 ## Troubleshooting
 
 ### Database Issues
+
 ```bash
 # Verify SQL Server running
 sqlcmd -S (localdb)\mssqllocaldb
@@ -367,12 +396,14 @@ dotnet ef database update --project FlowDesk.Data
 ```
 
 ### Build Errors
+
 ```bash
 dotnet clean
 dotnet build
 ```
 
 ### Port Already in Use
+
 Modify `FlowDesk.Api/Properties/launchSettings.json` or close other applications using port 5001
 
 ## Performance Considerations
@@ -394,11 +425,13 @@ Modify `FlowDesk.Api/Properties/launchSettings.json` or close other applications
 ## Testing
 
 Run unit tests:
+
 ```bash
 dotnet test --project FlowDesk.Tests
 ```
 
 Run specific test:
+
 ```bash
 dotnet test --project FlowDesk.Tests --filter "TestName"
 ```
@@ -406,6 +439,7 @@ dotnet test --project FlowDesk.Tests --filter "TestName"
 ## Deployment
 
 For production:
+
 1. Set up database in managed SQL instance
 2. Update connection string in appsettings.Production.json
 3. Enable authentication/authorization
@@ -416,6 +450,7 @@ For production:
 ## License & Support
 
 Internal FlowDesk project. For questions, refer to assignment documentation.
+
 - Comprehensive error handling
 
 ## API Documentation

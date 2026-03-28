@@ -2,32 +2,17 @@ using FlowDesk.Api.Filters;
 using FlowDesk.Api.Middleware;
 using FlowDesk.Data;
 using FlowDesk.Data.UnitOfWork;
+using FlowDesk.Services.DTOs;
 using FlowDesk.Services.Services;
 using FlowDesk.Services.Validators;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "FlowDesk Task Board API",
-        Version = "v1.0",
-        Description = "REST API for managing tasks and projects in FlowDesk",
-        Contact = new OpenApiContact
-        {
-            Name = "FlowDesk Team"
-        }
-    });
-
-    var xmlFile = Path.Combine(AppContext.BaseDirectory, "FlowDesk.Api.xml");
-    if (File.Exists(xmlFile))
-        c.IncludeXmlComments(xmlFile);
-});
+builder.Services.AddSwaggerGen();
 builder.Services.AddOpenApi();
 builder.Services.AddControllers(options =>
 {
@@ -54,7 +39,12 @@ builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
-builder.Services.AddValidatorsFromAssemblyContaining<CreateTaskRequestValidator>();
+builder.Services.AddScoped<IValidator<CreateTaskRequest>, CreateTaskRequestValidator>();
+builder.Services.AddScoped<IValidator<UpdateTaskRequest>, UpdateTaskRequestValidator>();
+builder.Services.AddScoped<IValidator<CreateProjectRequest>, CreateProjectRequestValidator>();
+builder.Services.AddScoped<IValidator<UpdateProjectRequest>, UpdateProjectRequestValidator>();
+builder.Services.AddScoped<IValidator<CreateUserRequest>, CreateUserRequestValidator>();
+builder.Services.AddScoped<IValidator<UpdateUserRequest>, UpdateUserRequestValidator>();
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()

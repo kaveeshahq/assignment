@@ -19,7 +19,7 @@ public class UserService : IUserService
         _logger = logger;
     }
 
-    public async Task<UserResponse> CreateUserAsync(CreateUserRequest request)
+    public async System.Threading.Tasks.Task<UserResponse> CreateUserAsync(CreateUserRequest request)
     {
         _logger.LogInformation("Creating user with email {Email}", request.Email);
 
@@ -45,7 +45,7 @@ public class UserService : IUserService
         return MapToResponse(user);
     }
 
-    public async Task<UserResponse?> GetUserByIdAsync(int id)
+    public async System.Threading.Tasks.Task<UserResponse?> GetUserByIdAsync(int id)
     {
         var user = await _unitOfWork.Users.GetByIdAsync(id);
         if (user == null)
@@ -54,7 +54,7 @@ public class UserService : IUserService
         return MapToResponse(user);
     }
 
-    public async Task<UserResponse?> GetUserByEmailAsync(string email)
+    public async System.Threading.Tasks.Task<UserResponse?> GetUserByEmailAsync(string email)
     {
         var user = await _unitOfWork.Users.GetByEmailAsync(email);
         if (user == null)
@@ -63,19 +63,19 @@ public class UserService : IUserService
         return MapToResponse(user);
     }
 
-    public async Task<IEnumerable<UserResponse>> GetActiveUsersAsync()
+    public async System.Threading.Tasks.Task<IEnumerable<UserResponse>> GetActiveUsersAsync()
     {
         var users = await _unitOfWork.Users.GetActiveUsersAsync();
         return users.Select(MapToResponse);
     }
 
-    public async Task<IEnumerable<UserResponse>> GetAllUsersAsync()
+    public async System.Threading.Tasks.Task<IEnumerable<UserResponse>> GetAllUsersAsync()
     {
         var users = await _unitOfWork.Users.GetAllAsync();
         return users.Select(MapToResponse);
     }
 
-    public async Task<UserResponse> UpdateUserAsync(int id, UpdateUserRequest request)
+    public async System.Threading.Tasks.Task<UserResponse> UpdateUserAsync(int id, UpdateUserRequest request)
     {
         _logger.LogInformation("Updating user {UserId}", id);
 
@@ -94,7 +94,7 @@ public class UserService : IUserService
         return MapToResponse(user);
     }
 
-    public async Task<bool> DeactivateUserAsync(int id)
+    public async System.Threading.Tasks.Task<bool> DeactivateUserAsync(int id)
     {
         _logger.LogInformation("Deactivating user {UserId}", id);
 
@@ -111,7 +111,7 @@ public class UserService : IUserService
         return true;
     }
 
-    public async Task<bool> ActivateUserAsync(int id)
+    public async System.Threading.Tasks.Task<bool> ActivateUserAsync(int id)
     {
         _logger.LogInformation("Activating user {UserId}", id);
 

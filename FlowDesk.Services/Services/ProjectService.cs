@@ -3,6 +3,7 @@ using FlowDesk.Domain;
 using FlowDesk.Domain.Exceptions;
 using FlowDesk.Services.DTOs;
 using Microsoft.Extensions.Logging;
+using Task = FlowDesk.Domain.Task;
 
 namespace FlowDesk.Services.Services;
 
@@ -17,7 +18,7 @@ public class ProjectService : IProjectService
         _logger = logger;
     }
 
-    public async Task<ProjectResponse> CreateProjectAsync(CreateProjectRequest request, int currentUserId)
+    public async System.Threading.Tasks.Task<ProjectResponse> CreateProjectAsync(CreateProjectRequest request, int currentUserId)
     {
         _logger.LogInformation("Creating project '{Name}' for user {UserId}", request.Name, currentUserId);
 
@@ -40,7 +41,7 @@ public class ProjectService : IProjectService
         return MapToResponse(project, 0);
     }
 
-    public async Task<ProjectResponse?> GetProjectByIdAsync(int id)
+    public async System.Threading.Tasks.Task<ProjectResponse?> GetProjectByIdAsync(int id)
     {
         var project = await _unitOfWork.Projects.GetByIdWithTasksAsync(id);
         if (project == null)
@@ -50,7 +51,7 @@ public class ProjectService : IProjectService
         return MapToResponse(project, taskCount);
     }
 
-    public async Task<IEnumerable<ProjectResponse>> GetUserProjectsAsync(int userId)
+    public async System.Threading.Tasks.Task<IEnumerable<ProjectResponse>> GetUserProjectsAsync(int userId)
     {
         var user = await _unitOfWork.Users.GetByIdAsync(userId);
         if (user == null)
@@ -64,13 +65,13 @@ public class ProjectService : IProjectService
         });
     }
 
-    public async Task<IEnumerable<ProjectResponse>> GetAllProjectsAsync()
+    public async System.Threading.Tasks.Task<IEnumerable<ProjectResponse>> GetAllProjectsAsync()
     {
         var projects = await _unitOfWork.Projects.GetAllAsync();
         return projects.Select(p => MapToResponse(p, 0));
     }
 
-    public async Task<ProjectResponse> UpdateProjectAsync(int id, UpdateProjectRequest request, int currentUserId)
+    public async System.Threading.Tasks.Task<ProjectResponse> UpdateProjectAsync(int id, UpdateProjectRequest request, int currentUserId)
     {
         _logger.LogInformation("Updating project {ProjectId}", id);
 
@@ -92,7 +93,7 @@ public class ProjectService : IProjectService
         return MapToResponse(project, 0);
     }
 
-    public async Task DeleteProjectAsync(int id, int currentUserId)
+    public async System.Threading.Tasks.Task DeleteProjectAsync(int id, int currentUserId)
     {
         _logger.LogInformation("Deleting project {ProjectId}", id);
 

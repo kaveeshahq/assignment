@@ -1,6 +1,7 @@
 using FluentValidation;
 using FlowDesk.Api.Middleware;
 using Microsoft.AspNetCore.Mvc.Filters;
+using ValidationException = FlowDesk.Api.Middleware.ValidationException;
 
 namespace FlowDesk.Api.Filters;
 
