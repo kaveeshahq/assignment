@@ -124,6 +124,10 @@ public class TaskService : ITaskService
             var assignedUser = await _unitOfWork.Users.GetByIdAsync(request.AssignedToUserId.Value);
             if (assignedUser == null)
                 throw new UserNotFoundException(request.AssignedToUserId.Value);
+
+            if (!assignedUser.IsActive)
+                throw new InvalidTaskException("Cannot assign task to inactive user");
+
             task.AssignedToUserId = request.AssignedToUserId.Value;
         }
 

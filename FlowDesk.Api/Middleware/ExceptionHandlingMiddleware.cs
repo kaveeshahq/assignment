@@ -33,6 +33,8 @@ public class ExceptionHandlingMiddleware
 
         var response = new ErrorResponse
         {
+            Message = "",
+            Code = "",
             Timestamp = DateTime.UtcNow,
         };
 
