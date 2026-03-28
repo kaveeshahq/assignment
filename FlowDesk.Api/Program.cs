@@ -2,6 +2,7 @@ using FlowDesk.Api.Filters;
 using FlowDesk.Api.Middleware;
 using FlowDesk.Data;
 using FlowDesk.Data.UnitOfWork;
+using FlowDesk.Services.Services;
 using FlowDesk.Services.Validators;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +31,10 @@ builder.Services.AddDbContext<FlowDeskDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+builder.Services.AddScoped<ITaskService, TaskService>();
+builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddValidatorsFromAssemblyContaining<CreateTaskRequestValidator>();
 
