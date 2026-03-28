@@ -6,10 +6,28 @@ using FlowDesk.Services.Services;
 using FlowDesk.Services.Validators;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "FlowDesk Task Board API",
+        Version = "v1.0",
+        Description = "REST API for managing tasks and projects in FlowDesk",
+        Contact = new OpenApiContact
+        {
+            Name = "FlowDesk Team"
+        }
+    });
+
+    var xmlFile = Path.Combine(AppContext.BaseDirectory, "FlowDesk.Api.xml");
+    if (File.Exists(xmlFile))
+        c.IncludeXmlComments(xmlFile);
+});
 builder.Services.AddOpenApi();
 builder.Services.AddControllers(options =>
 {
@@ -51,6 +69,12 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "FlowDesk API v1.0");
+        c.RoutePrefix = "swagger";
+    });
 }
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
