@@ -1,12 +1,19 @@
+using FlowDesk.Api.Filters;
+using FlowDesk.Api.Middleware;
 using FlowDesk.Data;
 using FlowDesk.Data.UnitOfWork;
+using FlowDesk.Services.Validators;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ValidationFilter>();
+});
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -24,6 +31,8 @@ builder.Services.AddDbContext<FlowDeskDbContext>(options =>
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+builder.Services.AddValidatorsFromAssemblyContaining<CreateTaskRequestValidator>();
+
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
     .WriteTo.Console()
@@ -39,6 +48,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseAuthorization();
