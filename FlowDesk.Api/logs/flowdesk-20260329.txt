@@ -1,0 +1,20 @@
+2026-03-29 14:09:04.755 +05:30 [INF] Now listening on: http://localhost:5035
+2026-03-29 14:09:04.799 +05:30 [INF] Application started. Press Ctrl+C to shut down.
+2026-03-29 14:09:04.800 +05:30 [INF] Hosting environment: Development
+2026-03-29 14:09:04.800 +05:30 [INF] Content root path: C:\Users\Asus\Desktop\assignment\FlowDesk.Api
+2026-03-29 14:10:00.937 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5035/api/health - null null
+2026-03-29 14:10:00.965 +05:30 [WRN] Failed to determine the https port for redirect.
+2026-03-29 14:10:00.970 +05:30 [INF] Executing endpoint 'FlowDesk.Api.Controllers.HealthController.Health (FlowDesk.Api)'
+2026-03-29 14:10:00.985 +05:30 [INF] Route matched with {action = "Health", controller = "Health"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Object] Health() on controller FlowDesk.Api.Controllers.HealthController (FlowDesk.Api).
+2026-03-29 14:10:00.995 +05:30 [INF] Health check requested
+2026-03-29 14:10:00.998 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`2[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-03-29 14:10:01.022 +05:30 [INF] Executed action FlowDesk.Api.Controllers.HealthController.Health (FlowDesk.Api) in 34.4612ms
+2026-03-29 14:10:01.023 +05:30 [INF] Executed endpoint 'FlowDesk.Api.Controllers.HealthController.Health (FlowDesk.Api)'
+2026-03-29 14:10:01.025 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5035/api/health - 200 null application/json; charset=utf-8 90.4113ms
+2026-03-29 14:10:09.374 +05:30 [INF] Request starting HTTP/1.1 GET http://localhost:5035/api - null null
+2026-03-29 14:10:09.375 +05:30 [INF] Executing endpoint 'FlowDesk.Api.Controllers.HealthController.Index (FlowDesk.Api)'
+2026-03-29 14:10:09.379 +05:30 [INF] Route matched with {action = "Index", controller = "Health"}. Executing controller action with signature Microsoft.AspNetCore.Mvc.ActionResult`1[System.Object] Index() on controller FlowDesk.Api.Controllers.HealthController (FlowDesk.Api).
+2026-03-29 14:10:09.380 +05:30 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`5[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.DateTime, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[<>f__AnonymousType1`4[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], FlowDesk.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2026-03-29 14:10:09.386 +05:30 [INF] Executed action FlowDesk.Api.Controllers.HealthController.Index (FlowDesk.Api) in 6.5598ms
+2026-03-29 14:10:09.386 +05:30 [INF] Executed endpoint 'FlowDesk.Api.Controllers.HealthController.Index (FlowDesk.Api)'
+2026-03-29 14:10:09.386 +05:30 [INF] Request finished HTTP/1.1 GET http://localhost:5035/api - 200 null application/json; charset=utf-8 12.5484ms

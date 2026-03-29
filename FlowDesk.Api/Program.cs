@@ -12,7 +12,6 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSwaggerGen();
 builder.Services.AddOpenApi();
 builder.Services.AddControllers(options =>
 {
@@ -59,12 +58,6 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "FlowDesk API v1.0");
-        c.RoutePrefix = "swagger";
-    });
 }
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
